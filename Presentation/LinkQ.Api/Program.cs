@@ -11,6 +11,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSingleton<JwtTokenService>();
 builder.Services.AddSingleton<UserRepository>();
 builder.Services.AddScoped<DataRepository>();
+builder.Services.AddScoped<DoiTuongRepository>();
+builder.Services.AddScoped<KhoRepository>();
+builder.Services.AddScoped<BoPhanRepository>();
+builder.Services.AddScoped<VatTuRepository>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -68,5 +72,9 @@ app.UseAuthorization();
 app.MapTestEndpoints();
 app.MapAuthEndpoints();   
 app.MapDataEndpoints();  
+app.MapDoiTuongEndpoints();
+app.MapKhoEndpoints();
+app.MapBoPhanEndpoints();
+app.MapVatTuEndpoints();
 
 app.Run();
