@@ -5,7 +5,7 @@ public class BoPhan
     public string Ma_Bp { get; set; } = string.Empty;
     public string Ten_Bp { get; set; } = string.Empty;
     public string Ma_Bp_Cha { get; set; } = string.Empty;
-    public string Stt_Bp { get; set; } = string.Empty;
+    public int Stt_Bp { get; set; }
     public string Ma_Loai1 { get; set; } = string.Empty;
     public string Ma_Loai2 { get; set; } = string.Empty;
     public string Ma_Loai3 { get; set; } = string.Empty;

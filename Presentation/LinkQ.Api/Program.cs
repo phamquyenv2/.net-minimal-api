@@ -69,6 +69,16 @@ app.UseSwaggerUI();
 app.UseAuthentication(); 
 app.UseAuthorization();
 
+app.Lifetime.ApplicationStarted.Register(() =>
+{
+    var url = "http://localhost:5081/swagger";
+    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+    {
+        FileName = url,
+        UseShellExecute = true
+    });
+});
+
 app.MapTestEndpoints();
 app.MapAuthEndpoints();   
 app.MapDataEndpoints();  
