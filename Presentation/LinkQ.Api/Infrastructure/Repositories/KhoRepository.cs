@@ -6,17 +6,17 @@ namespace LinkQ.Api.Infrastructure.Repositories;
 
 public class KhoRepository
 {
-    private readonly string _connectionString;
+    private readonly string connectionString;
 
     public KhoRepository(IConfiguration config)
     {
-        _connectionString = config.GetConnectionString("L60SANGTAM")
+        connectionString = config.GetConnectionString("L60SANGTAM")
             ?? throw new ArgumentNullException("Connection string 'L60SANGTAM' not found.");
     }
 
     public async Task<Kho?> GetByIdAsync(string maKho)
     {
-        using var connection = new SqlConnection(_connectionString);
+        using var connection = new SqlConnection(connectionString);
         return await connection.QueryFirstOrDefaultAsync<Kho>(
             "SELECT * FROM L81DMKHO WHERE Ma_Kho = @MaKho",
             new { MaKho = maKho });
@@ -24,7 +24,7 @@ public class KhoRepository
 
     public async Task<(IEnumerable<Kho> Items, int TotalCount)> GetListAsync(string? kw, int page, int pageSize)
     {
-        using var connection = new SqlConnection(_connectionString);
+        using var connection = new SqlConnection(connectionString);
         await connection.OpenAsync();
 
         var where = string.IsNullOrWhiteSpace(kw)
@@ -43,7 +43,7 @@ public class KhoRepository
 
     public async Task<int> CreateAsync(Kho kho)
     {
-        using var connection = new SqlConnection(_connectionString);
+        using var connection = new SqlConnection(connectionString);
         return await connection.ExecuteAsync(
             @"INSERT INTO L81DMKHO (Ma_Kho, Ten_Kho, Ma_Kho_Cha, Ma_Loai1, Ma_Loai2, Ma_Loai3,
               Ngay_Begin, Ngay_End, Ma_Data, Nh_Cuoi, Tk_Kho, Ma_Kv, Ma_Kho_VAT)
@@ -54,7 +54,7 @@ public class KhoRepository
 
     public async Task<int> UpdateAsync(Kho kho)
     {
-        using var connection = new SqlConnection(_connectionString);
+        using var connection = new SqlConnection(connectionString);
         return await connection.ExecuteAsync(
             @"UPDATE L81DMKHO SET 
               Ten_Kho = @Ten_Kho, Ma_Kho_Cha = @Ma_Kho_Cha,
@@ -67,7 +67,7 @@ public class KhoRepository
 
     public async Task<int> DeleteAsync(string maKho)
     {
-        using var connection = new SqlConnection(_connectionString);
+        using var connection = new SqlConnection(connectionString);
         return await connection.ExecuteAsync(
             "DELETE FROM L81DMKHO WHERE Ma_Kho = @MaKho",
             new { MaKho = maKho });

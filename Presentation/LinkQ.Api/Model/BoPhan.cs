@@ -1,8 +1,5 @@
 namespace LinkQ.Api.Model;
 
-/// <summary>
-/// Danh mục bộ phận - Bảng L81DMBP
-/// </summary>
 public class BoPhan
 {
     public string Ma_Bp { get; set; } = string.Empty;

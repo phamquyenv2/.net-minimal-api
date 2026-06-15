@@ -6,17 +6,17 @@ namespace LinkQ.Api.Infrastructure.Repositories;
 
 public class DoiTuongRepository
 {
-    private readonly string _connectionString;
+    private readonly string connectionString;
 
     public DoiTuongRepository(IConfiguration config)
     {
-        _connectionString = config.GetConnectionString("L60SANGTAM")
+        connectionString = config.GetConnectionString("L60SANGTAM")
             ?? throw new ArgumentNullException("Connection string 'L60SANGTAM' not found.");
     }
 
     public async Task<DoiTuong?> GetByIdAsync(string maDt)
     {
-        using var connection = new SqlConnection(_connectionString);
+        using var connection = new SqlConnection(connectionString);
         return await connection.QueryFirstOrDefaultAsync<DoiTuong>(
             "SELECT * FROM L81DMDT WHERE Ma_Dt = @MaDt",
             new { MaDt = maDt });
@@ -25,7 +25,7 @@ public class DoiTuongRepository
     public async Task<(IEnumerable<DoiTuong> Items, int TotalCount)> GetListAsync(
         string? kw, string? maLoaiDt, int page, int pageSize)
     {
-        using var connection = new SqlConnection(_connectionString);
+        using var connection = new SqlConnection(connectionString);
         await connection.OpenAsync();
 
         var conditions = new List<string>();
@@ -48,7 +48,7 @@ public class DoiTuongRepository
 
     public async Task<int> CreateAsync(DoiTuong doiTuong)
     {
-        using var connection = new SqlConnection(_connectionString);
+        using var connection = new SqlConnection(connectionString);
         return await connection.ExecuteAsync(
             @"INSERT INTO L81DMDT (Ma_Dt, Ten_Dt, Ma_Loai_Dt, Dia_Chi, Ma_So_Thue, 
               Tk_CongNo, So_TkNh, Ten_Nh, Nguoi_Gd, So_DtGd, Ma_Dt_Cha, Email, Fax, So_Dt,
@@ -69,7 +69,7 @@ public class DoiTuongRepository
 
     public async Task<int> UpdateAsync(DoiTuong doiTuong)
     {
-        using var connection = new SqlConnection(_connectionString);
+        using var connection = new SqlConnection(connectionString);
         return await connection.ExecuteAsync(
             @"UPDATE L81DMDT SET 
               Ten_Dt = @Ten_Dt, Ma_Loai_Dt = @Ma_Loai_Dt, Dia_Chi = @Dia_Chi, 
@@ -93,7 +93,7 @@ public class DoiTuongRepository
 
     public async Task<int> DeleteAsync(string maDt)
     {
-        using var connection = new SqlConnection(_connectionString);
+        using var connection = new SqlConnection(connectionString);
         return await connection.ExecuteAsync(
             "DELETE FROM L81DMDT WHERE Ma_Dt = @MaDt",
             new { MaDt = maDt });

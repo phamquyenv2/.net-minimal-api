@@ -1,8 +1,5 @@
 namespace LinkQ.Api.Model;
 
-/// <summary>
-/// Danh mục đối tượng (khách hàng, nhà cung cấp...) - Bảng L81DMDT
-/// </summary>
 public class DoiTuong
 {
     public string Ma_Dt { get; set; } = string.Empty;

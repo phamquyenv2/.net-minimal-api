@@ -1,8 +1,5 @@
 namespace LinkQ.Api.Model;
 
-/// <summary>
-/// Danh mục vật tư hàng hóa - Bảng L81DMVT
-/// </summary>
 public class VatTu
 {
     public string Ma_Vt { get; set; } = string.Empty;

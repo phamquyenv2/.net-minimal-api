@@ -5,17 +5,17 @@ namespace LinkQ.Api.Infrastructure.Repositories;
 
 public class DataRepository
 {
-    private readonly string _connectionString;
+    private readonly string connectionString;
 
     public DataRepository(IConfiguration configuration)
     {
-        _connectionString = configuration.GetConnectionString("L60SANGTAM") 
+        connectionString = configuration.GetConnectionString("L60SANGTAM") 
             ?? throw new ArgumentNullException("Connection string 'L60SANGTAM' not found.");
     }
 
     public async Task<IEnumerable<dynamic>> QueryDataAsync(string tableName)
     {
-        using var connection = new SqlConnection(_connectionString);
+        using var connection = new SqlConnection(connectionString);
         
         await connection.OpenAsync();
 

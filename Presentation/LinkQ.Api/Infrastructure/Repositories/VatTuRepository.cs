@@ -6,17 +6,17 @@ namespace LinkQ.Api.Infrastructure.Repositories;
 
 public class VatTuRepository
 {
-    private readonly string _connectionString;
+    private readonly string connectionString;
 
     public VatTuRepository(IConfiguration config)
     {
-        _connectionString = config.GetConnectionString("L60SANGTAM")
+        connectionString = config.GetConnectionString("L60SANGTAM")
             ?? throw new ArgumentNullException("Connection string 'L60SANGTAM' not found.");
     }
 
     public async Task<VatTu?> GetByIdAsync(string maVt)
     {
-        using var conn = new SqlConnection(_connectionString);
+        using var conn = new SqlConnection(connectionString);
         return await conn.QueryFirstOrDefaultAsync<VatTu>(
             @"SELECT Ma_Vt, Ten_Vt, Ma_Nh_Vt, Dvt, Dvt1, He_So1, Dvt2, He_So2, Dvt3, He_So3,
               Ma_Loai1, Ma_Loai2, Ma_Loai3, Ngay_Begin, Ngay_End, Ma_Data,
@@ -35,7 +35,7 @@ public class VatTuRepository
     public async Task<(IEnumerable<VatTu> Items, int TotalCount)> GetListAsync(
         string? kw, string? maNhVt, int page, int pageSize)
     {
-        using var conn = new SqlConnection(_connectionString);
+        using var conn = new SqlConnection(connectionString);
         await conn.OpenAsync();
 
         var conditions = new List<string>();
@@ -68,7 +68,7 @@ public class VatTuRepository
 
     public async Task<int> CreateAsync(VatTu vt)
     {
-        using var conn = new SqlConnection(_connectionString);
+        using var conn = new SqlConnection(connectionString);
         return await conn.ExecuteAsync(
             @"INSERT INTO L81DMVT (Ma_Vt, Ten_Vt, Ma_Nh_Vt, Dvt, Dvt1, He_So1,
               Dvt2, He_So2, Dvt3, He_So3, Ma_Loai1, Ma_Loai2, Ma_Loai3,
@@ -84,7 +84,7 @@ public class VatTuRepository
 
     public async Task<int> UpdateAsync(VatTu vt)
     {
-        using var conn = new SqlConnection(_connectionString);
+        using var conn = new SqlConnection(connectionString);
         return await conn.ExecuteAsync(
             @"UPDATE L81DMVT SET Ten_Vt=@Ten_Vt, Ma_Nh_Vt=@Ma_Nh_Vt, Dvt=@Dvt,
               Dvt1=@Dvt1, He_So1=@He_So1, Dvt2=@Dvt2, He_So2=@He_So2,
@@ -99,7 +99,7 @@ public class VatTuRepository
 
     public async Task<int> DeleteAsync(string maVt)
     {
-        using var conn = new SqlConnection(_connectionString);
+        using var conn = new SqlConnection(connectionString);
         return await conn.ExecuteAsync("DELETE FROM L81DMVT WHERE Ma_Vt = @MaVt", new { MaVt = maVt });
     }
 }

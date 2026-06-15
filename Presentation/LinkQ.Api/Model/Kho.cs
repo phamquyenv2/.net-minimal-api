@@ -1,8 +1,5 @@
 namespace LinkQ.Api.Model;
 
-/// <summary>
-/// Danh mục kho - Bảng L81DMKHO
-/// </summary>
 public class Kho
 {
     public string Ma_Kho { get; set; } = string.Empty;

@@ -6,24 +6,24 @@ namespace LinkQ.Api.Infrastructure.Repositories;
 
 public class BoPhanRepository
 {
-    private readonly string _connectionString;
+    private readonly string connectionString;
 
     public BoPhanRepository(IConfiguration config)
     {
-        _connectionString = config.GetConnectionString("L60SANGTAM")
+        connectionString = config.GetConnectionString("L60SANGTAM")
             ?? throw new ArgumentNullException("Connection string 'L60SANGTAM' not found.");
     }
 
     public async Task<BoPhan?> GetByIdAsync(string maBp)
     {
-        using var conn = new SqlConnection(_connectionString);
+        using var conn = new SqlConnection(connectionString);
         return await conn.QueryFirstOrDefaultAsync<BoPhan>(
             "SELECT * FROM L81DMBP WHERE Ma_Bp = @MaBp", new { MaBp = maBp });
     }
 
     public async Task<(IEnumerable<BoPhan> Items, int TotalCount)> GetListAsync(string? kw, int page, int pageSize)
     {
-        using var conn = new SqlConnection(_connectionString);
+        using var conn = new SqlConnection(connectionString);
         await conn.OpenAsync();
 
         var where = string.IsNullOrWhiteSpace(kw)
@@ -42,7 +42,7 @@ public class BoPhanRepository
 
     public async Task<int> CreateAsync(BoPhan bp)
     {
-        using var conn = new SqlConnection(_connectionString);
+        using var conn = new SqlConnection(connectionString);
         return await conn.ExecuteAsync(
             @"INSERT INTO L81DMBP (Ma_Bp, Ten_Bp, Ma_Bp_Cha, Stt_Bp, Ma_Loai1, Ma_Loai2, Ma_Loai3,
               Ma_Data, Nh_Cuoi, Is_Bp_LaiLo, Tk_Cp, Ma_Dt_CN, Ma_Kho,
@@ -56,7 +56,7 @@ public class BoPhanRepository
 
     public async Task<int> UpdateAsync(BoPhan bp)
     {
-        using var conn = new SqlConnection(_connectionString);
+        using var conn = new SqlConnection(connectionString);
         return await conn.ExecuteAsync(
             @"UPDATE L81DMBP SET Ten_Bp=@Ten_Bp, Ma_Bp_Cha=@Ma_Bp_Cha, Stt_Bp=@Stt_Bp,
               Ma_Loai1=@Ma_Loai1, Ma_Loai2=@Ma_Loai2, Ma_Loai3=@Ma_Loai3,
@@ -71,7 +71,7 @@ public class BoPhanRepository
 
     public async Task<int> DeleteAsync(string maBp)
     {
-        using var conn = new SqlConnection(_connectionString);
+        using var conn = new SqlConnection(connectionString);
         return await conn.ExecuteAsync("DELETE FROM L81DMBP WHERE Ma_Bp = @MaBp", new { MaBp = maBp });
     }
 }
